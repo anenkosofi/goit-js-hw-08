@@ -8,7 +8,7 @@ const refs = {
   input: document.querySelector('input'),
 };
 
-const savedFormData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+let savedFormData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
 
 refs.form.addEventListener('input', throttle(onFormInput, 500));
 populateFormData();
@@ -38,10 +38,12 @@ function onFormSubmit(e) {
     console.log(error.message);
   }
 
-  e.target.reset();
-
   localStorage.removeItem(LOCAL_STORAGE_KEY);
+  savedFormData = '';
+
+  e.target.reset();
 }
+
 function populateFormData() {
   if (savedFormData) {
     refs.input.value = savedFormData.email || '';
